@@ -9,7 +9,7 @@
  * @public
  */
 export interface DrawTextOptions {
-  color?: string;
+  fillColor?: string;
   align?: 'right' | 'center' | 'left';
   fontName?: string;
   fontSize?: string;

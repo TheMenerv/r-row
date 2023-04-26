@@ -189,13 +189,13 @@ export class Mouse {
    */
   private _update(deltaTime: number): void {
     const oldState = this._state;
-    this._state.forEach((state, key) => {
-      if (!oldState.has(key)) oldState.set(key, KeyState.Up);
-      if (oldState.get(key)?.includes('up') && state === KeyState.Down)
-        this._state.set(key, KeyState.JustDown);
-      else if (oldState.get(key)?.includes('down') && state === KeyState.Up)
-        this._state.set(key, KeyState.JustUp);
-      else this._state.set(key, state as KeyState);
+    this._tempState.forEach((state, button) => {
+      if (!oldState.has(button)) oldState.set(button, KeyState.Up);
+      if (oldState.get(button)?.includes('up') && state === KeyState.Down)
+        this._state.set(button, KeyState.JustDown);
+      else if (oldState.get(button)?.includes('down') && state === KeyState.Up)
+        this._state.set(button, KeyState.JustUp);
+      else this._state.set(button, state as KeyState);
     });
   }
 }

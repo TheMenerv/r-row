@@ -1,6 +1,7 @@
 import { SceneManager } from './SceneManager';
 import { GameCanvas } from './GameCanvas';
 import { UpdateFunction } from './types/UpdateFunction';
+import { DrawFunction } from './types/DrawFunction';
 
 /**
  * @class GameLoop - Singleton class that handles the game loop.
@@ -11,6 +12,8 @@ export class GameLoop {
   private _deltaTime: number;
   private _lastTime: number;
   private _updateSubscribers: UpdateFunction[];
+  private _preRenderSubscribers: DrawFunction[];
+  private _postRenderSubscribers: DrawFunction[];
 
   /**
    * @constructor
@@ -20,6 +23,8 @@ export class GameLoop {
     this._deltaTime = 0;
     this._lastTime = 0;
     this._updateSubscribers = [];
+    this._preRenderSubscribers = [];
+    this._postRenderSubscribers = [];
     requestAnimationFrame(this._loop.bind(this));
   }
 
@@ -86,6 +91,82 @@ export class GameLoop {
   }
 
   /**
+   * @method subscribeToPreRender - Subscribes a function to the pre-render loop.
+   * @param {DrawFunction} subscriber - The function to subscribe.
+   * @returns {GameLoop} The instance of the GameLoop class.
+   * @public
+   * @example
+   * ServiceContainer.GameLoop.subscribeToPreRender((ctx) => {
+   *   ctx.fillStyle = 'red';
+   *   ctx.fillRect(0, 0, 100, 100);
+   * });
+   */
+  public subscribeToPreRender(subscriber: DrawFunction): GameLoop {
+    this._preRenderSubscribers.push(subscriber);
+    return this;
+  }
+
+  /**
+   * @method unsubscribeFromPreRender - Unsubscribes a function from the pre-render loop.
+   * @param {DrawFunction} subscriber - The function to unsubscribe.
+   * @returns {GameLoop} The instance of the GameLoop class.
+   * @public
+   * @example
+   * const preRenderFunction = (ctx) => {
+   *   ctx.fillStyle = 'red';
+   *   ctx.fillRect(0, 0, 100, 100);
+   * };
+   * const gameLoop = ServiceContainer.GameLoop;
+   * gameLoop.subscribeToPreRender(preRenderFunction);
+   * gameLoop.unsubscribeFromPreRender(preRenderFunction);
+   */
+  public unsubscribeFromPreRender(subscriber: DrawFunction): GameLoop {
+    const index = this._preRenderSubscribers.indexOf(subscriber);
+    if (index > -1) {
+      this._preRenderSubscribers.splice(index, 1);
+    }
+    return this;
+  }
+
+  /**
+   * @method subscribeToPostRender - Subscribes a function to the post-render loop.
+   * @param {DrawFunction} subscriber - The function to subscribe.
+   * @returns {GameLoop} The instance of the GameLoop class.
+   * @public
+   * @example
+   * ServiceContainer.GameLoop.subscribeToPostRender((ctx) => {
+   *   ctx.fillStyle = 'red';
+   *   ctx.fillRect(0, 0, 100, 100);
+   * });
+   */
+  public subscribeToPostRender(subscriber: DrawFunction): GameLoop {
+    this._postRenderSubscribers.push(subscriber);
+    return this;
+  }
+
+  /**
+   * @method unsubscribeFromPostRender - Unsubscribes a function from the post-render loop.
+   * @param {DrawFunction} subscriber - The function to unsubscribe.
+   * @returns {GameLoop} The instance of the GameLoop class.
+   * @public
+   * @example
+   * const postRenderFunction = (ctx) => {
+   *   ctx.fillStyle = 'red';
+   *   ctx.fillRect(0, 0, 100, 100);
+   * };
+   * const gameLoop = ServiceContainer.GameLoop;
+   * gameLoop.subscribeToPostRender(postRenderFunction);
+   * gameLoop.unsubscribeFromPostRender(postRenderFunction);
+   */
+  public unsubscribeFromPostRender(subscriber: DrawFunction): GameLoop {
+    const index = this._postRenderSubscribers.indexOf(subscriber);
+    if (index > -1) {
+      this._postRenderSubscribers.splice(index, 1);
+    }
+    return this;
+  }
+
+  /**
    * @method _loop - The game loop.
    * @param {number} time - The current time.
    * @returns {void}
@@ -102,7 +183,13 @@ export class GameLoop {
     );
     currentScene?.update(this._deltaTime);
     gameCanvas.clearScreen();
+    this._preRenderSubscribers.forEach((subscriber) =>
+      subscriber(gameCanvas.context)
+    );
     currentScene?.draw(gameCanvas.context);
+    this._postRenderSubscribers.forEach((subscriber) =>
+      subscriber(gameCanvas.context)
+    );
 
     requestAnimationFrame(this._loop.bind(this));
   }

@@ -5,6 +5,7 @@ import { Rectangle } from '../primitives/Rectangle';
 import { ButtonOptions } from '../interfaces/ButtonOptions';
 import { Drawable } from '../interfaces/Drawable';
 import { ClickableState } from '../enums/ClickableState';
+import { Point } from '../primitives/Point';
 
 /**
  * @class Button - Represents a clickable button.
@@ -76,8 +77,10 @@ export class Button extends Clickable implements Drawable {
     if (this._sprites) {
       const sprite = this._sprites.get(this._state);
       if (!sprite) return;
-      sprite.position = this.area.position;
-      this.area.size = sprite.size;
+      sprite.position = this.area.position.add(
+        sprite.size.divide(new Point(2, 2))
+      );
+      this._area.size = sprite.size;
     }
   }
 
@@ -105,7 +108,7 @@ export class Button extends Clickable implements Drawable {
    * @returns {void}
    * @private
    */
-  private _initNineSlice(options: ButtonOptions) {
+  private _initNineSlice(options: ButtonOptions): void {
     if (!options.nineSlices) return;
 
     this._nineSlices = new Map();
@@ -122,6 +125,10 @@ export class Button extends Clickable implements Drawable {
       options.nineSlices.get(ClickableState.Clicked) as NineSlice
     );
     this._nineSlices.set(
+      ClickableState.Pressed,
+      options.nineSlices.get(ClickableState.Pressed) as NineSlice
+    );
+    this._nineSlices.set(
       ClickableState.Disabled,
       options.nineSlices.get(ClickableState.Disabled) as NineSlice
     );
@@ -133,7 +140,7 @@ export class Button extends Clickable implements Drawable {
    * @returns {void}
    * @private
    */
-  private _initSprite(options: ButtonOptions) {
+  private _initSprite(options: ButtonOptions): void {
     if (!options.sprites) return;
 
     this._sprites = new Map();
@@ -148,6 +155,10 @@ export class Button extends Clickable implements Drawable {
     this._sprites.set(
       ClickableState.Clicked,
       options.sprites.get(ClickableState.Clicked) as Sprite
+    );
+    this._sprites.set(
+      ClickableState.Pressed,
+      options.sprites.get(ClickableState.Pressed) as Sprite
     );
     this._sprites.set(
       ClickableState.Disabled,

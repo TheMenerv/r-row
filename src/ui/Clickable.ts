@@ -143,18 +143,16 @@ export class Clickable implements Updatable {
     const mouse = Mouse.instance;
     const touch = Touch.instance;
 
-    const isUserClicking =
-      mouse.isJustDown(MouseButton.Left) || touch.isClicked;
+    const isUserClicking = mouse.isJustUp(MouseButton.Left) || touch.isClicked;
     const isUserHovering =
       this._area.isContainsPoint(mouse.position) ||
       this._area.isContainsPoint(touch.position);
     const isUserPressing = mouse.isDown(MouseButton.Left) || touch.isDown;
-    const isUserReleasing = mouse.isJustUp(MouseButton.Left) || touch.isEnded;
 
     if (isUserClicking && isUserHovering) this._state = ClickableState.Clicked;
     else if (isUserPressing && isUserHovering)
       this._state = ClickableState.Pressed;
     else if (isUserHovering) this._state = ClickableState.Hovered;
-    else if (isUserReleasing) this._state = ClickableState.Released;
+    else this._state = ClickableState.Released;
   }
 }

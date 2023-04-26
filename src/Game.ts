@@ -16,7 +16,18 @@ export class Game {
    * @constructor
    * @public
    */
-  constructor() {}
+  constructor() {
+    const logo = `    Powered by
+        ██████╗       ██████╗  ██████╗ ██╗    ██╗  █╗
+        ██╔══██╗      ██╔══██╗██╔═══██╗██║    ██║  ██╗
+    ███╗██████╔╝█████╗██████╔╝██║   ██║██║ █╗ ██║█████╗
+    ╚══╝██╔══██╗╚════╝██╔══██╗██║   ██║██║███╗██║╚═██╔╝
+        ██║  ██║      ██║  ██║╚██████╔╝╚███╔███╔╝  █╔╝
+        ╚═╝  ╚═╝      ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝   ╚╝
+    Developed with ♥️ by Yoan B. (Menerv)
+    More info at https://github.com/TheMenerv/r-row`;
+    console.log(logo);
+  }
 
   /**
    * @method start - Start the game.

@@ -15,7 +15,7 @@ export function drawText(
   options?: DrawTextOptions
 ) {
   const DEFAULT_OPTIONS = {
-    color: '#000',
+    fillColor: '#000',
     align: 'left',
     fontName: 'Arial',
     fontSize: '8px',
@@ -23,7 +23,7 @@ export function drawText(
     strokeSize: 0,
   };
 
-  let color = DEFAULT_OPTIONS.color;
+  let fillColor = DEFAULT_OPTIONS.fillColor;
   let align = DEFAULT_OPTIONS.align;
   let fontName = DEFAULT_OPTIONS.fontName;
   let fontSize = DEFAULT_OPTIONS.fontSize;
@@ -31,7 +31,7 @@ export function drawText(
   let strokeSize = DEFAULT_OPTIONS.strokeSize;
 
   if (options) {
-    color = options.color ? options.color : color;
+    fillColor = options.fillColor ? options.fillColor : fillColor;
     align = options.align ? options.align : align;
     fontName = options.fontName ? options.fontName : fontName;
     fontSize = options.fontSize ? options.fontSize : fontSize;
@@ -41,21 +41,17 @@ export function drawText(
 
   context.save();
 
-  context.fillStyle = color;
+  context.fillStyle = fillColor;
   context.font = `${fontSize} ${fontName}`;
   context.strokeStyle = strokeColor;
   context.lineWidth = strokeSize;
-
-  const textWidth = context.measureText(text).width;
-  let positionX = position.x - textWidth / 2;
-  if (align === 'left') positionX = position.x;
-  else if (align === 'right') positionX = position.x - textWidth;
+  context.textAlign = align as CanvasTextAlign;
 
   if (options)
     if (options.strokeSize || options.strokeColor)
-      context.strokeText(text, positionX, position.y);
+      context.strokeText(text, position.x, position.y);
 
-  context.fillText(text, positionX, position.y);
+  context.fillText(text, position.x, position.y);
 
   context.restore();
 }

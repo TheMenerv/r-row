@@ -34,7 +34,7 @@ export class Rectangle implements Drawable {
    * @public
    * @example
    * const rectangle = new Rectangle(new Point(10, 10), new Point(10, 10));
-   * rectangle.setOptions({ fillColor: 'red', weight: 2, strokeColor: 'blue' });
+   * rectangle.setOptions({ fillColor: 'red', weight: 2, strokeColor: 'blue', radius: 5 });
    */
   public setOptions(options: RectangleOptions): Rectangle {
     this.options = options;
@@ -494,9 +494,23 @@ export class Rectangle implements Drawable {
    * rectangle.draw(ctx);
    */
   public draw(ctx: CanvasRenderingContext2D): void {
+    const radius = this.options.radius || 0;
+    const x = this.position.x;
+    const y = this.position.y;
+    const width = this.size.x;
+    const height = this.size.y;
+
     ctx.save();
     ctx.beginPath();
-    ctx.rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
     ctx.fillStyle = this.options.fillColor || 'transparent';
     ctx.fill();
     ctx.lineWidth = this.options.weight || 1;

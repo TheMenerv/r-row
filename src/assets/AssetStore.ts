@@ -175,9 +175,12 @@ export class AssetStore {
    * AssetStore.instance._loadFont('myFont', 'myFontUrl');
    */
   private async _loadFont(name: string, url: string): Promise<void> {
-    const font = new FontFace(name, `url(${url})`);
-    await font.load();
-    document.fonts.add(font);
+    // const font = new FontFace(name, `url(${url})`);
+    // await font.load();
+    // document.fonts.add(font);
+    const style = document.createElement('style');
+    style.innerHTML = `@font-face { font-family: "${name}"; src: url("${url}") format("truetype"); }`;
+    document.head.appendChild(style);
   }
 
   /**

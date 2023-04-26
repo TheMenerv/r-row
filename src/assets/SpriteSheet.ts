@@ -37,6 +37,39 @@ export class SpriteSheet extends Sprite {
   }
 
   /**
+   * @get currentAnimation - The current animation.
+   * @returns {SpriteSheetAnimation | undefined} - The current animation.
+   * @public
+   * @example
+   * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
+   * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
+   * spriteSheet.playAnimation('walk');
+   * console.log(spriteSheet.currentAnimation);
+   */
+  public get currentAnimation(): SpriteSheetAnimation | undefined {
+    return this._currentAnimation;
+  }
+
+  /**
+   * @get currentAnimationName - The name of the current animation.
+   * @returns {string | undefined} - The name of the current animation.
+   * @public
+   * @example
+   * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
+   * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
+   * spriteSheet.playAnimation('walk');
+   * if (spriteSheet.currentAnimationName === 'walk') {
+   *   // Do something
+   * }
+   */
+  public get currentAnimationName(): string | undefined {
+    this._animations.forEach((animation, name) => {
+      if (animation === this._currentAnimation) return name;
+    });
+    return undefined;
+  }
+
+  /**
    * @get isAnimationEnded - Whether the animation has ended.
    * @returns {boolean} - Whether the animation has ended.
    * @public
