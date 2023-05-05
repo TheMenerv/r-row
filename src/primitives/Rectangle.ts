@@ -514,7 +514,7 @@ export class Rectangle implements Drawable {
     ctx.fillStyle = this.options.fillColor || 'transparent';
     ctx.fill();
     ctx.lineWidth = this.options.weight || 1;
-    ctx.strokeStyle = this.options.strokeColor || 'black';
+    ctx.strokeStyle = this.options.strokeColor || 'transparent';
     ctx.stroke();
     ctx.restore();
   }

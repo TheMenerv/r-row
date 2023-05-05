@@ -1,3 +1,4 @@
+import { TileSet } from './assets/TileSet';
 // Interfaces
 export { ButtonOptions } from './interfaces/ButtonOptions';
 export { CanvasOptions } from './interfaces/CanvasOptions';
@@ -22,7 +23,6 @@ export { Mouse } from './inputs/Mouse';
 export { Touch } from './inputs/Touch';
 // Types
 export { AssetType } from './types/AssetType';
-export { ScenesContainer } from './types/ScenesContainer';
 export { UpdateFunction } from './types/UpdateFunction';
 // Primitives
 export { Circle } from './primitives/Circle';
@@ -34,6 +34,8 @@ export { AssetStore } from './assets/AssetStore';
 export { Sound } from './assets/Sound';
 export { Sprite } from './assets/Sprite';
 export { SpriteSheet } from './assets/SpriteSheet';
+export { SpriteSheetAnimation } from './assets/SpriteSheetAnimation';
+export { TileSet } from './assets/TileSet';
 // UI
 export { Button } from './ui/Button';
 export { Clickable } from './ui/Clickable';

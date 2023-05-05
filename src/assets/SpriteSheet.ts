@@ -1,7 +1,6 @@
 import { Sprite } from './Sprite';
 import { SpriteSheetAnimation } from './SpriteSheetAnimation';
 import { Point } from '../primitives/Point';
-import { GameLoop } from '../GameLoop';
 
 /**
  * @class SpriteSheet - A sprite sheet.
@@ -11,10 +10,8 @@ import { GameLoop } from '../GameLoop';
 export class SpriteSheet extends Sprite {
   private _animations: Map<string, SpriteSheetAnimation>;
   private _currentAnimation?: SpriteSheetAnimation;
-  private _currentFrame: number;
-  private _timerAnimation: number;
+  private _currentAnimationName?: string;
   private _frameSize: Point;
-  private _isAnimationEnded: boolean;
 
   /**
    * @constructor - Creates a new sprite sheet.
@@ -28,12 +25,7 @@ export class SpriteSheet extends Sprite {
   public constructor(imageName: string, frameSize: Point) {
     super(imageName);
     this._animations = new Map<string, SpriteSheetAnimation>();
-    this._currentFrame = 0;
-    this._timerAnimation = 0;
     this._frameSize = frameSize;
-    this._isAnimationEnded = false;
-
-    GameLoop.instance.subscribeToUpdate(this._update.bind(this));
   }
 
   /**
@@ -43,7 +35,7 @@ export class SpriteSheet extends Sprite {
    * @example
    * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
    * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
-   * spriteSheet.playAnimation('walk');
+   * spriteSheet.setAnimation('walk');
    * console.log(spriteSheet.currentAnimation);
    */
   public get currentAnimation(): SpriteSheetAnimation | undefined {
@@ -57,16 +49,27 @@ export class SpriteSheet extends Sprite {
    * @example
    * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
    * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
-   * spriteSheet.playAnimation('walk');
+   * spriteSheet.setAnimation('walk');
    * if (spriteSheet.currentAnimationName === 'walk') {
    *   // Do something
    * }
    */
   public get currentAnimationName(): string | undefined {
-    this._animations.forEach((animation, name) => {
-      if (animation === this._currentAnimation) return name;
-    });
-    return undefined;
+    return this._currentAnimationName;
+  }
+
+  /**
+   * @get currentAnimationFrame - The current frame of the animation.
+   * @returns {number} - The current frame of the animation.
+   * @public
+   * @example
+   * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
+   * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
+   * spriteSheet.setAnimation('walk');
+   * console.log(spriteSheet.currentAnimationFrame);
+   */
+  public get currentAnimationFrame(): number {
+    return this._currentAnimation?.currentFrame ?? 0;
   }
 
   /**
@@ -76,13 +79,13 @@ export class SpriteSheet extends Sprite {
    * @example
    * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
    * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
-   * spriteSheet.playAnimation('walk');
+   * spriteSheet.setAnimation('walk');
    * if (spriteSheet.isAnimationEnded) {
    *   // Do something
    * }
    */
   public get isAnimationEnded(): boolean {
-    return this._isAnimationEnded;
+    return this._currentAnimation?.isEnded ?? false;
   }
 
   /**
@@ -106,23 +109,56 @@ export class SpriteSheet extends Sprite {
   }
 
   /**
-   * @method playAnimation - Plays an animation.
+   * @method resetAnimation - Resets the animation.
+   * @returns {SpriteSheet} - The sprite sheet.
+   * @public
+   * @example
+   * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
+   * spriteSheet.addAnimation('attack', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
+   * spriteSheet.setAnimation('attack');
+   * if (spriteSheet.isAnimationEnded) {
+   *   spriteSheet.resetAnimation();
+   * }
+   */
+  public resetAnimation(): SpriteSheet {
+    this._currentAnimation?.reset();
+    return this;
+  }
+
+  /**
+   * @method setAnimation - Sets the current animation.
    * @param {string} name - The name of the animation.
+   * @param {boolean} [reset=true] - Whether to reset the animation.
    * @returns {SpriteSheet} - The sprite sheet.
    * @public
    * @example
    * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
    * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
-   * spriteSheet.playAnimation('walk');
+   * spriteSheet.setAnimation('walk');
    */
-  public playAnimation(name: string): SpriteSheet {
+  public setAnimation(name: string, reset: boolean = true): SpriteSheet {
     if (!this._animations.has(name))
       throw new Error(`Animation with name ${name} does not exist`);
     this._currentAnimation = this._animations.get(name);
-    this._currentFrame = 0;
-    this._timerAnimation = 0;
-    this._isAnimationEnded = false;
+    this._currentAnimationName = name;
+    if (reset) this.resetAnimation();
     return this;
+  }
+
+  /**
+   * @method update - Updates the sprite sheet.
+   * @param {number} deltaTime - The time since the last update.
+   * @returns {void}
+   * @public
+   * @example
+   * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
+   * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
+   * spriteSheet.setAnimation('walk');
+   * spriteSheet.update(deltaTime);
+   */
+  public update(deltaTime: number): void {
+    if (!this._currentAnimation) return;
+    this._currentAnimation.update(deltaTime);
   }
 
   /**
@@ -132,7 +168,7 @@ export class SpriteSheet extends Sprite {
    * @example
    * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));
    * spriteSheet.addAnimation('walk', new SpriteSheetAnimation([0, 1, 2, 3], 0.1));
-   * spriteSheet.playAnimation('walk');
+   * spriteSheet.setAnimation('walk');
    * spriteSheet.draw(context);
    */
   public draw(context: CanvasRenderingContext2D): void {
@@ -140,7 +176,8 @@ export class SpriteSheet extends Sprite {
 
     context.save();
 
-    const frame = this._currentAnimation.frames[this._currentFrame];
+    const frame =
+      this._currentAnimation.frames[this._currentAnimation.currentFrame];
     const column = this._image.width / this._frameSize.x;
     const sourceX = (frame % column) * this._frameSize.x;
     const sourceY = Math.floor(frame / column) * this._frameSize.y;
@@ -172,40 +209,5 @@ export class SpriteSheet extends Sprite {
     );
 
     context.restore();
-  }
-
-  /**
-   * @method cleanBeforeDestroy - Cleans the sprite sheet before destroying it.
-   * @public
-   * @example
-   * const spriteSheet = new SpriteSheet('myImage', new Point(32, 32));;
-   * spriteSheet.cleanBeforeDestroy();
-   */
-  public cleanBeforeDestroy(): void {
-    GameLoop.instance.unsubscribeFromUpdate(this._update.bind(this));
-  }
-
-  /**
-   * @method _update - Updates the sprite sheet.
-   * @param {number} deltaTime - The time since the last update.
-   * @returns {void}
-   * @private
-   */
-  private _update(deltaTime: number): void {
-    if (!this._currentAnimation) return;
-
-    this._timerAnimation += deltaTime;
-    if (this._timerAnimation >= this._currentAnimation.speed) {
-      this._timerAnimation = 0;
-      this._currentFrame++;
-      if (this._currentFrame >= this._currentAnimation.frames.length) {
-        if (this._currentAnimation.loop) {
-          this._currentFrame = 0;
-        } else {
-          this._currentFrame = this._currentAnimation.frames.length - 1;
-          this._isAnimationEnded = true;
-        }
-      }
-    }
   }
 }

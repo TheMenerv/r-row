@@ -14,6 +14,7 @@ export class GameLoop {
   private _updateSubscribers: UpdateFunction[];
   private _preRenderSubscribers: DrawFunction[];
   private _postRenderSubscribers: DrawFunction[];
+  private _freezeLimit: number;
 
   /**
    * @constructor
@@ -25,6 +26,7 @@ export class GameLoop {
     this._updateSubscribers = [];
     this._preRenderSubscribers = [];
     this._postRenderSubscribers = [];
+    this._freezeLimit = -1;
     requestAnimationFrame(this._loop.bind(this));
   }
 
@@ -51,7 +53,20 @@ export class GameLoop {
    * ServiceContainer.GameLoop.FPS;
    */
   public get FPS(): number {
-    return Math.round(1000 / this._deltaTime);
+    return Math.round(1 / this._deltaTime);
+  }
+
+  /**
+   * @method setFreezeLimit - Sets the freeze limit.
+   * @param {number} limit - The freeze limit in second.
+   * @returns {GameLoop} The instance of the GameLoop class.
+   * @public
+   * @example
+   * ServiceContainer.GameLoop.setFreezeLimit(0.1);
+   */
+  public setFreezeLimit(limit: number): GameLoop {
+    this._freezeLimit = limit;
+    return this;
   }
 
   /**
@@ -173,8 +188,13 @@ export class GameLoop {
    * @private
    */
   private _loop(time: number): void {
-    this._deltaTime = time - this._lastTime;
+    this._deltaTime = (time - this._lastTime) / 1000;
     this._lastTime = time;
+
+    if (this._deltaTime > this._freezeLimit && this._freezeLimit > 0) {
+      requestAnimationFrame(this._loop.bind(this));
+      return;
+    }
 
     const { currentScene } = SceneManager.instance;
     const gameCanvas = GameCanvas.instance;

@@ -2,10 +2,10 @@ import { GameCanvas } from './GameCanvas';
 import { GameLoop } from './GameLoop';
 import { SceneManager } from './SceneManager';
 import { CanvasOptions } from './interfaces/CanvasOptions';
-import { ScenesContainer } from './types/ScenesContainer';
 import { Keyboard } from './inputs/Keyboard';
 import { Mouse } from './inputs/Mouse';
 import { Touch } from './inputs/Touch';
+import { Scene } from './interfaces/Scene';
 
 /**
  * @class Game - The main game class.
@@ -17,15 +17,15 @@ export class Game {
    * @public
    */
   constructor() {
-    const logo = `    Powered by
-        ██████╗       ██████╗  ██████╗ ██╗    ██╗  █╗
-        ██╔══██╗      ██╔══██╗██╔═══██╗██║    ██║  ██╗
-    ███╗██████╔╝█████╗██████╔╝██║   ██║██║ █╗ ██║█████╗
-    ╚══╝██╔══██╗╚════╝██╔══██╗██║   ██║██║███╗██║╚═██╔╝
-        ██║  ██║      ██║  ██║╚██████╔╝╚███╔███╔╝  █╔╝
-        ╚═╝  ╚═╝      ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝   ╚╝
-    Developed with ♥️ by Yoan B. (Menerv)
-    More info at https://github.com/TheMenerv/r-row`;
+    const logo = `Powered by
+    ██████╗       ██████╗  ██████╗ ██╗    ██╗  █╗
+    ██╔══██╗      ██╔══██╗██╔═══██╗██║    ██║  ██╗
+███╗██████╔╝█████╗██████╔╝██║   ██║██║ █╗ ██║█████╗
+╚══╝██╔══██╗╚════╝██╔══██╗██║   ██║██║███╗██║╚═██╔╝
+    ██║  ██║      ██║  ██║╚██████╔╝╚███╔███╔╝  █╔╝
+    ╚═╝  ╚═╝      ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝   ╚╝
+Developed with ♥️ by Yoan B. (Menerv)
+More info at https://github.com/TheMenerv/r-row`;
     console.log(logo);
   }
 
@@ -61,16 +61,15 @@ export class Game {
 
   /**
    * @method addScenesAndSelect - Add scenes to the scene manager and select a scene.
-   * @param {ScenesContainer} scenes - The scenes to add.
-   * @param {string} sceneName - The name of the scene to select.
+   * @param {Scene} scene - The scene to start.
    * @returns {Game} The instance of the Game class.
    * @public
    * @example
    * const game = new Game();
-   * game.addScenesAndSelect({ scene1: new Scene1(), scene2: new Scene2() }, 'scene1');
+   * game.startScene(new GameScene());
    */
-  public addScenesAndSelect(scenes: ScenesContainer, sceneName: string): Game {
-    SceneManager.instance.addScenes(scenes).setScene(sceneName);
+  public startScene(scene: Scene): Game {
+    SceneManager.instance.setScene(scene);
     return this;
   }
 }

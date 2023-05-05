@@ -14,6 +14,9 @@ export class GameCanvas {
   private _context: CanvasRenderingContext2D;
   private _baseSize: Point;
   private _scale: number;
+  private _imageSmoothingEnabled: boolean;
+  private _imageSmoothingQuality: ImageSmoothingQuality;
+  private _backgroundColor: string;
 
   /**
    * @constructor
@@ -22,6 +25,9 @@ export class GameCanvas {
   private constructor() {
     this._baseSize = DEFAULT_CANVAS_SIZE;
     this._scale = 1;
+    this._imageSmoothingEnabled = false;
+    this._imageSmoothingQuality = 'high';
+    this._backgroundColor = '#000000';
 
     this._canvas = document.createElement('canvas');
     this._context = this._canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -53,6 +59,7 @@ export class GameCanvas {
   public init(options?: CanvasOptions): GameCanvas {
     const DEFAULT_CANVAS_PARENT = document.body;
     const DEFAULT_IMAGE_SMOOTHING_ENABLED = false;
+    const DEFAULT_IMAGE_SMOOTHING_QUALITY = 'high';
     const DEFAULT_BACKGROUND_COLOR = '#000000';
 
     this._scale = 1;
@@ -62,11 +69,15 @@ export class GameCanvas {
       ? options.size || DEFAULT_CANVAS_SIZE
       : DEFAULT_CANVAS_SIZE;
 
-    this._context.imageSmoothingEnabled = options
+    this._imageSmoothingEnabled = options
       ? options.imageSmoothingEnabled || DEFAULT_IMAGE_SMOOTHING_ENABLED
       : DEFAULT_IMAGE_SMOOTHING_ENABLED;
 
-    this._context.fillStyle = options
+    this._imageSmoothingQuality = options
+      ? options.imageSmoothingQuality || DEFAULT_IMAGE_SMOOTHING_QUALITY
+      : DEFAULT_IMAGE_SMOOTHING_QUALITY;
+
+    this._backgroundColor = options
       ? options.backgroundColor || DEFAULT_BACKGROUND_COLOR
       : DEFAULT_BACKGROUND_COLOR;
 
@@ -220,6 +231,9 @@ export class GameCanvas {
     this._canvas.width = size.x;
     this._canvas.height = size.y;
     this._context.scale(this._scale, this._scale);
+    this._context.imageSmoothingEnabled = this._imageSmoothingEnabled;
+    this._context.imageSmoothingQuality = this._imageSmoothingQuality;
+    this._context.fillStyle = this._backgroundColor;
     return this;
   }
 

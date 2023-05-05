@@ -15,11 +15,11 @@ export function drawText(
   options?: DrawTextOptions
 ) {
   const DEFAULT_OPTIONS = {
-    fillColor: '#000',
+    fillColor: 'transparent',
     align: 'left',
     fontName: 'Arial',
     fontSize: '8px',
-    strokeColor: '#000',
+    strokeColor: 'transparent',
     strokeSize: 0,
   };
 
