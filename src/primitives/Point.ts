@@ -30,7 +30,7 @@ export class Point implements Drawable {
   /**
    * @method setOptions - Set the options of the point
    * @param {PointOptions} options - The options to set
-   * @returns {Point} The point with the new options
+   * @returns {Point} - The point with the new options
    * @public
    * @example
    * const point = new Point(10, 10);
@@ -69,7 +69,7 @@ export class Point implements Drawable {
   /**
    * @method add - Addition with another point
    * @param {Point} point - The point to add
-   * @returns {Point} The result of the addition
+   * @returns {Point}- The result of the addition
    * @public
    * @example
    * const point1 = new Point(10, 10);
@@ -139,7 +139,7 @@ export class Point implements Drawable {
   /**
    * @method getDistanceWithPoint - Get the distance between two points
    * @param {Point} point - The point to calculate the distance to
-   * @returns {number} The distance between the two points
+   * @returns {number} - The distance between the two points
    * @public
    * @example
    * const point1 = new Point(10, 10);
@@ -156,7 +156,7 @@ export class Point implements Drawable {
    * @method isOnLine - Check if the point is on a line
    * @param {Line} line - The line to check
    * @param {number} [tolerance=0.1] - The tolerance of the check
-   * @returns {boolean} Whether the point is on the line
+   * @returns {boolean} - Whether the point is on the line
    * @public
    * @example
    * const point = new Point(10, 10);
@@ -170,7 +170,7 @@ export class Point implements Drawable {
   /**
    * @method isOnRectangle - Check if the point is on a rectangle
    * @param {Rectangle} rectangle - The rectangle to check
-   * @returns {boolean} Whether the point is on the rectangle
+   * @returns {boolean} - Whether the point is on the rectangle
    * @public
    * @example
    * const point = new Point(10, 10);
@@ -193,7 +193,7 @@ export class Point implements Drawable {
   /**
    * @method isInRectangle - Check if the point is in a rectangle
    * @param {Rectangle} rectangle - The rectangle to check
-   * @returns {boolean} Whether the point is in the rectangle
+   * @returns {boolean} - Whether the point is in the rectangle
    * @public
    * @example
    * const point = new Point(10, 10);
@@ -213,7 +213,7 @@ export class Point implements Drawable {
    * @method isOnCircle - Check if the point is on a circle
    * @param {Circle} circle - The circle to check
    * @param {number} [tolerance=0.1] - The tolerance of the check
-   * @returns {boolean} Whether the point is on the circle
+   * @returns {boolean} - Whether the point is on the circle
    * @public
    * @example
    * const point = new Point(10, 10);
@@ -229,7 +229,7 @@ export class Point implements Drawable {
    * @method isInCircle - Check if the point is in a circle
    * @param {Circle} circle - The circle to check
    * @param {number} [tolerance=0.1] - The tolerance of the check
-   * @returns {boolean} Whether the point is in the circle
+   * @returns {boolean} - Whether the point is in the circle
    * @public
    * @example
    * const point = new Point(10, 10);

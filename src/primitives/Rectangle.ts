@@ -216,7 +216,7 @@ export class Rectangle implements Drawable {
   /**
    * @method equals - Check if the rectangle is equal to another rectangle
    * @param {Rectangle} rectangle - The rectangle to compare
-   * @returns {boolean} True if the rectangle is equal to another rectangle
+   * @returns {boolean} - True if the rectangle is equal to another rectangle
    * @public
    * @example
    * const rectangle1 = new Rectangle(new Point(10, 10), new Point(10, 10));

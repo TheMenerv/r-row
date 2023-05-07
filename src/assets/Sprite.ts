@@ -155,12 +155,12 @@ export class Sprite implements Drawable {
   }
 
   /**
-   * @get size - The size of the sprite.
-   * @returns {Point} - The size of the sprite.
+   * @method draw - Draws the sprite.
+   * @param {CanvasRenderingContext2D} context - The context to draw to.
    * @public
    * @example
    * const sprite = new Sprite('myImage');
-   * sprite.size = new Point(100, 100);
+   * sprite.draw(context);
    */
   public draw(context: CanvasRenderingContext2D): void {
     context.save();

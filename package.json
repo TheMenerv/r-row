@@ -1,13 +1,13 @@
 {
   "name": "r-row",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "TypeScript 2D Game Engine",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "rm -rf ./dist && webpack --watch --devtool hidden-source-map",
     "build": "rm -rf ./dist && webpack --mode production",
-    "publish": "rm -rf ./dist && npm run build && npm publish --access public"
+    "publish": "npm publish --access public"
   },
   "repository": {
     "type": "git",

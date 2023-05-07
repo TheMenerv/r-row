@@ -30,7 +30,7 @@ export class Line implements Drawable {
   /**
    * @method setOptions - Set the options of the line
    * @param {LineOptions} options - The options to set
-   * @returns {Line} The line with the new options
+   * @returns {Line} - The line with the new options
    * @public
    * @example
    * const line = new Line(new Point(10, 10), new Point(20, 20));
@@ -132,7 +132,7 @@ export class Line implements Drawable {
    * @method isContainsPoint - Check if the line contains a point
    * @param {Point} point - The point to check
    * @param {number} [tolerance=0.1] - The tolerance to use
-   * @returns {boolean} Whether the line contains the point
+   * @returns {boolean} - Whether the line contains the point
    * @public
    * @example
    * const line = new Line(new Point(10, 10), new Point(20, 20));
@@ -149,7 +149,7 @@ export class Line implements Drawable {
    * @method isIntersectsWithLine - Check if the line intersects with another line
    * @param {Line} line - The line to check
    * @param {number} [tolerance=0.1] - The tolerance to use
-   * @returns {boolean} Whether the lines intersect
+   * @returns {boolean} - Whether the lines intersect
    * @public
    * @example
    * const line1 = new Line(new Point(10, 10), new Point(20, 20));
@@ -213,7 +213,7 @@ export class Line implements Drawable {
   /**
    * @method isIntersectsWithRectangle - Check if the line intersects with a rectangle
    * @param {Rectangle} rectangle - The rectangle to check
-   * @returns {boolean} Whether the line intersects with the rectangle
+   * @returns {boolean} - Whether the line intersects with the rectangle
    * @public
    * @example
    * const line = new Line(new Point(10, 10), new Point(20, 20));
@@ -268,7 +268,7 @@ export class Line implements Drawable {
   /**
    * @method isInRectangle - Check if the line is in a rectangle
    * @param {Rectangle} rectangle - The rectangle to check
-   * @returns {boolean} Whether the line is in the rectangle
+   * @returns {boolean} - Whether the line is in the rectangle
    * @public
    * @example
    * const line = new Line(new Point(10, 10), new Point(20, 20));
@@ -286,7 +286,7 @@ export class Line implements Drawable {
    * @method isIntersectsWithCircle - Check if the line intersects with a circle
    * @param {Circle} circle - The circle to check
    * @param {number} [tolerance=0.1] - The tolerance to use
-   * @returns {boolean} Whether the line intersects with the circle
+   * @returns {boolean} - Whether the line intersects with the circle
    * @public
    * @example
    * const line = new Line(new Point(10, 10), new Point(20, 20));
@@ -308,7 +308,7 @@ export class Line implements Drawable {
    * @method getIntersectionsWithCircle - Get the intersection point of the line with a circle
    * @param {Circle} circle - The circle to check
    * @param {number} [tolerance=0.1] - The tolerance to use
-   * @returns {Point | null} The intersection point or null if the line doesn't intersect with the circle
+   * @returns {Point | null} - The intersection point or null if the line doesn't intersect with the circle
    * @public
    * @example
    * const line = new Line(new Point(10, 10), new Point(20, 20));
@@ -335,7 +335,7 @@ export class Line implements Drawable {
   /**
    * @method isInCircle - Check if the line is in a circle
    * @param {Circle} circle - The circle to check
-   * @returns {boolean} Whether the line is in the circle
+   * @returns {boolean} - Whether the line is in the circle
    * @public
    * @example
    * const line = new Line(new Point(10, 10), new Point(20, 20));

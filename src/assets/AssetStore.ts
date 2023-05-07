@@ -62,39 +62,45 @@ export class AssetStore {
    * @method addFont - Adds a font to the AssetStore.
    * @param {string} name - The name of the font.
    * @param {string} url - The url of the font.
-   * @returns {void}
+   * @returns {AssetStore} - The instance of the AssetStore class.
    * @public
    * @example
-   * ServiceContainer.AssetStore.addFont('myFont', 'myFontUrl');
+   * import myFontUrl from './font/myFont.ttf'
+   * ServiceContainer.AssetStore.addSound('myFont', myFontUrl);
    */
-  public addFont(name: string, url: string): void {
+  public addFont(name: string, url: string): AssetStore {
     this._fontsToLoad.push({ name, url });
+    return this;
   }
 
   /**
    * @method addSound - Adds a sound to the AssetStore.
    * @param {string} name - The name of the sound.
    * @param {string} url - The url of the sound.
-   * @returns {void}
+   * @returns {AssetStore} - The instance of the AssetStore class.
    * @public
    * @example
-   * ServiceContainer.AssetStore.addSound('mySound', 'mySoundUrl');
+   * import mySoundUrl from './sound/mySound.mp3'
+   * ServiceContainer.AssetStore.addSound('mySound', mySoundUrl);
    */
-  public addSound(name: string, url: string): void {
+  public addSound(name: string, url: string): AssetStore {
     this._soundsToLoad.push({ name, url });
+    return this;
   }
 
   /**
    * @method addImage - Adds an image to the AssetStore.
    * @param {string} name - The name of the image.
    * @param {string} url - The url of the image.
-   * @returns {void}
+   * @returns {AssetStore} - The instance of the AssetStore class.
    * @public
    * @example
-   * ServiceContainer.AssetStore.addImage('myImage', 'myImageUrl');
+   * import myImageUrl from './sound/mySImage.png'
+   * ServiceContainer.AssetStore.addImage('myImage', myImageUrl);
    */
-  public addImage(name: string, url: string): void {
+  public addImage(name: string, url: string): AssetStore {
     this._imagesToLoad.push({ name, url });
+    return this;
   }
 
   /**

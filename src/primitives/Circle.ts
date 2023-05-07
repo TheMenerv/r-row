@@ -69,7 +69,7 @@ export class Circle implements Drawable {
   /**
    * @method equals - Check if the circle is equal to another circle
    * @param {Circle} circle - The circle to compare with
-   * @returns {boolean} Whether the circles are equal
+   * @returns {boolean} - Whether the circles are equal
    * @public
    * @example
    * const circle1 = new Circle(new Point(10, 10), 10);
@@ -88,7 +88,7 @@ export class Circle implements Drawable {
   /**
    * @method isContainsPoint - Check if the circle contains a point
    * @param {Point} point - The point to check
-   * @returns {boolean} Whether the circle contains the point
+   * @returns {boolean} - Whether the circle contains the point
    * @public
    * @example
    * const circle = new Circle(new Point(10, 10), 10);
@@ -101,7 +101,7 @@ export class Circle implements Drawable {
   /**
    * @method isIntersectsWithCircle - Check if the circle intersects with another circle
    * @param {Circle} circle - The circle to check
-   * @returns {boolean} Whether the circle intersects with the other circle
+   * @returns {boolean} - Whether the circle intersects with the other circle
    * @public
    * @example
    * const circle1 = new Circle(new Point(10, 10), 10);
@@ -121,7 +121,7 @@ export class Circle implements Drawable {
   /**
    * @method isIntersectsWithLine - Check if the circle intersects with a line
    * @param {Line} line - The line to check
-   * @returns {boolean} Whether the circle intersects with the line
+   * @returns {boolean} - Whether the circle intersects with the line
    * @public
    * @example
    * const circle = new Circle(new Point(10, 10), 10);
@@ -141,7 +141,7 @@ export class Circle implements Drawable {
   /**
    * @method getIntersectionsWithLine - Get the intersections with a line
    * @param {Line} line - The line to get the intersections with
-   * @returns {Point[]} The intersections with the line
+   * @returns {Point[]} - The intersections with the line
    * @public
    * @example
    * const circle = new Circle(new Point(10, 10), 10);
@@ -173,7 +173,7 @@ export class Circle implements Drawable {
   /**
    * @method isIntersectsWithRectangle - Check if the circle intersects with a rectangle
    * @param {Rectangle} rectangle - The rectangle to check
-   * @returns {boolean} Whether the circle intersects with the rectangle
+   * @returns {boolean} - Whether the circle intersects with the rectangle
    * @public
    * @example
    * const circle = new Circle(new Point(10, 10), 10);
@@ -196,7 +196,7 @@ export class Circle implements Drawable {
   /**
    * @method getIntersectionsWithRectangle - Get the intersections with a rectangle
    * @param {Rectangle} rectangle - The rectangle to get the intersections with
-   * @returns {Point[]} The intersections with the rectangle
+   * @returns {Point[]} - The intersections with the rectangle
    * @public
    * @example
    * const circle = new Circle(new Point(10, 10), 10);

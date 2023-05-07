@@ -7,13 +7,14 @@ import { Point } from '../primitives/Point';
  * @param {string} text - The text to draw
  * @param {Point} position - The position of the text
  * @param {DrawTextOptions} [options] - The options for drawing the text
+ * @returns {void}
  */
 export function drawText(
   context: CanvasRenderingContext2D,
   text: string,
   position: Point,
   options?: DrawTextOptions
-) {
+): void {
   const DEFAULT_OPTIONS = {
     fillColor: 'transparent',
     align: 'left',

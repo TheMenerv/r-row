@@ -150,10 +150,11 @@ export class Touch {
 
   /**
    * @method setClickDelay - Sets the click delay.
+   * @param {number} delay - The click delay.
    * @returns {vois}
    * @public
    * @example
-   * ServiceContainer.Touch.setClickDelay = 0.5;
+   * ServiceContainer.Touch.setClickDelay(0.5);
    */
   public setClickDelay(delay: number): void {
     this._clickDelay = delay;

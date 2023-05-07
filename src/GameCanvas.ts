@@ -54,7 +54,7 @@ export class GameCanvas {
    * @example
    * ServiceContainer.GameCanvas.init();
    * @example
-   * ServiceContainer.GameCanvas.init({ width: 800, height: 600, parent: document.body, imageSmoothingEnabled: true, backgroundColor: '#000' });
+   * ServiceContainer.GameCanvas.init({ size: new Point(800, 600), parent: document.body, imageSmoothingEnabled: true, backgroundColor: '#000' });
    */
   public init(options?: CanvasOptions): GameCanvas {
     const DEFAULT_CANVAS_PARENT = document.body;
