@@ -63,7 +63,6 @@ export class GameCanvas {
     const DEFAULT_BACKGROUND_COLOR = '#000000';
 
     this._scale = 1;
-    this._canvas.tabIndex = 0;
 
     this._baseSize = options
       ? options.size || DEFAULT_CANVAS_SIZE
@@ -85,7 +84,16 @@ export class GameCanvas {
       ? options.parent || DEFAULT_CANVAS_PARENT
       : DEFAULT_CANVAS_PARENT;
 
+    this._canvas.tabIndex = 1;
+
     parent.appendChild(this._canvas);
+    this._canvas.focus();
+    window.addEventListener('mousedown', () => {
+      this._canvas.focus();
+    });
+    window.addEventListener('touchstart', () => {
+      this._canvas.focus();
+    });
     window.addEventListener('resize', () => this._resize());
     window.addEventListener('orientationchange', () => this._resize());
 
