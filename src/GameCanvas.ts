@@ -14,6 +14,7 @@ export class GameCanvas {
   private _context: CanvasRenderingContext2D;
   private _baseSize: Point;
   private _scale: number;
+  private _autoSize: boolean;
   private _imageSmoothingEnabled: boolean;
   private _imageSmoothingQuality: ImageSmoothingQuality;
   private _backgroundColor: string;
@@ -25,6 +26,7 @@ export class GameCanvas {
   private constructor() {
     this._baseSize = DEFAULT_CANVAS_SIZE;
     this._scale = 1;
+    this._autoSize = true;
     this._imageSmoothingEnabled = false;
     this._imageSmoothingQuality = 'high';
     this._backgroundColor = '#000000';
@@ -58,6 +60,7 @@ export class GameCanvas {
    */
   public init(options?: CanvasOptions): GameCanvas {
     const DEFAULT_CANVAS_PARENT = document.body;
+    const DEFAULT_CANVAS_AUTOSIZE = true;
     const DEFAULT_IMAGE_SMOOTHING_ENABLED = false;
     const DEFAULT_IMAGE_SMOOTHING_QUALITY = 'high';
     const DEFAULT_BACKGROUND_COLOR = '#000000';
@@ -67,6 +70,10 @@ export class GameCanvas {
     this._baseSize = options
       ? options.size || DEFAULT_CANVAS_SIZE
       : DEFAULT_CANVAS_SIZE;
+
+    this._autoSize = options
+      ? options.autoSize || DEFAULT_CANVAS_AUTOSIZE
+      : DEFAULT_CANVAS_AUTOSIZE;
 
     this._imageSmoothingEnabled = options
       ? options.imageSmoothingEnabled || DEFAULT_IMAGE_SMOOTHING_ENABLED
@@ -232,6 +239,8 @@ export class GameCanvas {
   private _resize(): GameCanvas {
     if (!GameCanvas._isInitialized)
       throw new Error('GameCanvas not initialized. Call init().');
+    if (!this._autoSize)
+      return this;
     const windowSize = new Point(window.innerWidth, window.innerHeight);
     const ratio = this._baseSize.x / this._baseSize.y;
     this._scale = this._getScale(windowSize, ratio);
