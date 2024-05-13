@@ -71,9 +71,10 @@ export class GameCanvas {
       ? options.size || DEFAULT_CANVAS_SIZE
       : DEFAULT_CANVAS_SIZE;
 
-    this._autoSize = options
-      ? options.autoSize || DEFAULT_CANVAS_AUTOSIZE
-      : DEFAULT_CANVAS_AUTOSIZE;
+    if (options && options.autoSize !== undefined)
+      this._autoSize = options.autoSize;
+    else
+      this._autoSize = DEFAULT_CANVAS_AUTOSIZE;
 
     this._imageSmoothingEnabled = options
       ? options.imageSmoothingEnabled || DEFAULT_IMAGE_SMOOTHING_ENABLED
