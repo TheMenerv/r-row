@@ -17,6 +17,7 @@ export class InputField {
   private _form: HTMLFormElement;
   private _isSubmittedByEnterKey: boolean;
   private _isOldSubmitted: boolean;
+  private _fontSize: number;
 
   /**
    * @constructor
@@ -45,6 +46,8 @@ export class InputField {
     const node = GameCanvas.instance.canvas.parentNode as HTMLElement;
     node.appendChild(this._form);
     this._form.appendChild(this._input);
+    this._input.style.fontSize = `10px`;
+    this._fontSize = parseInt(this._input.style.fontSize.slice(0, -2));
     this.setOptions(options ?? {});
     this._baseStyle = this._input.style;
     this._applyCanvasScale();
@@ -196,13 +199,13 @@ export class InputField {
     this._input.style.height = `${this._area.size.y * scale}px`;
     if (this._baseStyle.fontSize.slice(-2) === 'px') {
       const fontSize = parseInt(this._baseStyle.fontSize.slice(0, -2));
-      this._input.style.fontSize = `${fontSize * scale}px`;
+      this._input.style.fontSize = `${this._fontSize * scale}px`;
     } else if (this._baseStyle.fontSize.slice(-2) === 'em') {
       const fontSize = parseInt(this._baseStyle.fontSize.slice(0, -2));
-      this._input.style.fontSize = `${fontSize * scale}em`;
+      this._input.style.fontSize = `${this._fontSize * scale}em`;
     } else if (this._baseStyle.fontSize.slice(-3) === 'rem') {
       const fontSize = parseInt(this._baseStyle.fontSize.slice(0, -3));
-      this._input.style.fontSize = `${fontSize * scale}rem`;
+      this._input.style.fontSize = `${this._fontSize * scale}rem`;
     }
 
     const canvasPosition = GameCanvas.instance.position;
