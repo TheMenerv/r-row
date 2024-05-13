@@ -107,7 +107,7 @@ export class GameCanvas {
 
     GameCanvas._isInitialized = true;
 
-    this._resize();
+    this._resize(true);
     this._canvas.focus();
 
     return GameCanvas._instance;
@@ -237,18 +237,32 @@ export class GameCanvas {
    * const gameCanvas = GameCanvas.instance;
    * gameCanvas._resize();
    */
-  private _resize(): GameCanvas {
+  private _resize(init: boolean = false): GameCanvas {
     if (!GameCanvas._isInitialized)
       throw new Error('GameCanvas not initialized. Call init().');
+    const hdpiRatio = Math.ceil(window.devicePixelRatio);
+    if (init) {
+      this._scale = 1;
+      this._canvas.width = this._baseSize.x * hdpiRatio;
+      this._canvas.height = this._baseSize.y * hdpiRatio;
+      this._canvas.style.width = `${this._baseSize.x}px`;
+      this._canvas.style.height = `${this._baseSize.y}px`;
+      this._context.scale(this._scale * hdpiRatio, this._scale * hdpiRatio);
+      this._context.imageSmoothingEnabled = this._imageSmoothingEnabled;
+      this._context.imageSmoothingQuality = this._imageSmoothingQuality;
+      this._context.fillStyle = this._backgroundColor;
+    }
     if (!this._autoSize)
       return this;
     const windowSize = new Point(window.innerWidth, window.innerHeight);
     const ratio = this._baseSize.x / this._baseSize.y;
     this._scale = this._getScale(windowSize, ratio);
     const size = this._baseSize.multiply(new Point(this._scale, this._scale));
-    this._canvas.width = size.x;
-    this._canvas.height = size.y;
-    this._context.scale(this._scale, this._scale);
+    this._canvas.width = size.x * hdpiRatio;
+    this._canvas.height = size.y * hdpiRatio;
+    this._canvas.style.width = `${size.x}px`;
+    this._canvas.style.height = `${size.y}px`;
+    this._context.scale(this._scale * hdpiRatio, this._scale * hdpiRatio);
     this._context.imageSmoothingEnabled = this._imageSmoothingEnabled;
     this._context.imageSmoothingQuality = this._imageSmoothingQuality;
     this._context.fillStyle = this._backgroundColor;

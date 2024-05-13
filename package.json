@@ -1,6 +1,6 @@
 {
   "name": "r-row",
-  "version": "2.5.1",
+  "version": "2.5.3",
   "description": "TypeScript 2D Game Engine",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
