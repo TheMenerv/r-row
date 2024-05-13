@@ -129,6 +129,19 @@ export class InputField {
   }
 
   /**
+   * @method getInputElement - Get the input element.
+   * @returns {HTMLInputElement}
+   * @public
+   * @example
+   * const inputField = new InputField(...);
+   * const input = inputField.getInputElement();
+   * input.value = "Hi!";
+   */
+  public getInputElement(): HTMLInputElement {
+    return this._input;
+  }
+
+  /**
    * @method clear - Clear the input field.
    * @returns {void}
    * @public
